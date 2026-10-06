@@ -1,0 +1,474 @@
+:root {
+  --sea: #a9d3f0;
+  --night: #0b1a3a;
+  --no-data: #d0d4d9;
+  --wind-red: #dc3545;
+  --rain-blue: #339af0;
+  --rain-cloud: #8f9aa8;
+  --storm-cloud: #4a5059;
+  --storm-cloud-dark: #1f2328;
+  --bolt: #ffd43b;
+  --t1: #3b4cc0;
+  --t2: #6f9ce8;
+  --t3: #a8d5e2;
+  --t4: #9fd38a;
+  --t5: #f6c453;
+  --t6: #e8604c;
+}
+
+body {
+  font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  background: #f4f6f9;
+}
+
+/* ---------- 네비바 / 알림 ---------- */
+.progress-wrap {
+  width: 220px;
+}
+
+.progress-wrap .progress {
+  height: 6px;
+}
+
+#alert-area:empty {
+  display: none;
+}
+
+/* ---------- 지도 ---------- */
+#map {
+  height: 65vh;
+  min-height: 360px;
+  background: var(--sea);
+}
+
+.leaflet-container {
+  font-family: inherit;
+  background: var(--sea);
+}
+
+/* ---------- 도시 기온 라벨 ---------- */
+.city-icon {
+  background: none;
+  border: 0;
+}
+
+.city-icon:focus {
+  outline: none;
+}
+
+.city-icon:focus-visible .city-pill {
+  outline: 2px solid #0d6efd;
+  outline-offset: 2px;
+}
+
+.city-pill {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0 6px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 17px;
+  white-space: nowrap;
+  color: #212529;
+  background: var(--no-data);
+  border: 1.5px solid #fff;
+  border-radius: 999px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  transition: transform 0.15s;
+}
+
+.city-pill.t1 { background: var(--t1); color: #fff; }
+.city-pill.t2 { background: var(--t2); color: #fff; }
+.city-pill.t3 { background: var(--t3); }
+.city-pill.t4 { background: var(--t4); }
+.city-pill.t5 { background: var(--t5); }
+.city-pill.t6 { background: var(--t6); color: #fff; }
+
+.city-pill.is-hover {
+  border-color: #212529;
+  transform: translate(-50%, -50%) scale(1.15);
+}
+
+.city-pill.is-selected {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.45);
+}
+
+.city-name {
+  display: none;
+  font-weight: 600;
+}
+
+.show-names .city-name {
+  display: inline;
+}
+
+/* 축소 상태에서는 tier 2 도시와 그 날씨 효과를 숨긴다 */
+.hide-tier2 .tier-2 {
+  display: none;
+}
+
+.map-error {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+/* ---------- 미리보기 툴팁 ---------- */
+.leaflet-tooltip.weather-tooltip {
+  width: 220px;
+  padding: 0.6rem 0.75rem;
+  white-space: normal;
+  color: #212529;
+  background: #fff;
+  border: 0;
+  border-radius: 0.75rem;
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.18);
+}
+
+.leaflet-tooltip-top.weather-tooltip::before {
+  border-top-color: #fff;
+}
+
+.tt-head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.tt-flag {
+  width: 22px;
+  height: auto;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+}
+
+.tt-main {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.tt-icon {
+  width: 42px;
+  height: 42px;
+  margin: -6px -4px;
+}
+
+.tt-temp {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.tt-desc {
+  font-size: 0.85rem;
+  color: #495057;
+}
+
+.tt-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0.6rem;
+  font-size: 0.8rem;
+  color: #495057;
+}
+
+.wind-alert {
+  color: var(--wind-red);
+  font-weight: 600;
+}
+
+/* ---------- 상세 패널 ---------- */
+.detail-placeholder {
+  padding: 2.5rem 1rem;
+  text-align: center;
+  color: #6c757d;
+  background: #fff;
+  border: 2px dashed #ced4da;
+  border-radius: 1rem;
+}
+
+.detail-card {
+  border: 0;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.detail-head {
+  background: #fff;
+}
+
+.detail-flag {
+  width: 56px;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.detail-icon {
+  width: 100px;
+  height: 100px;
+  margin: -12px -8px;
+}
+
+.detail-temp {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.info-tile {
+  height: 100%;
+  padding: 0.75rem 1rem;
+  background: #f8f9fa;
+  border-radius: 0.75rem;
+}
+
+.info-label {
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.info-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.info-sub {
+  font-size: 0.8rem;
+  color: #495057;
+}
+
+.wind-arrow {
+  display: inline-block;
+}
+
+/* ---------- 범례 ---------- */
+.legend-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.swatch {
+  display: inline-block;
+  flex: none;
+  width: 1.4rem;
+  height: 0.9rem;
+  border-radius: 3px;
+}
+
+.sw-t1 { background: var(--t1); }
+.sw-t2 { background: var(--t2); }
+.sw-t3 { background: var(--t3); }
+.sw-t4 { background: var(--t4); }
+.sw-t5 { background: var(--t5); }
+.sw-t6 { background: var(--t6); }
+.sw-none { background: var(--no-data); }
+.sw-night { background: var(--night); opacity: 0.6; }
+
+.legend-icon {
+  width: 1.4rem;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.legend-storm {
+  color: var(--storm-cloud-dark);
+}
+
+/* ---------- 날씨 효과 ---------- */
+.fx-icon {
+  background: none;
+  border: 0;
+}
+
+.fx {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  pointer-events: none;
+}
+
+/* 강풍: 빨간 바람 줄기가 --rot 방향으로 흐른다 */
+.fx-wind-rot {
+  position: absolute;
+  inset: 0;
+  transform: rotate(var(--rot));
+}
+
+.fx-wind-rot span {
+  position: absolute;
+  left: 50%;
+  width: 18px;
+  height: 6px;
+  margin-left: -9px;
+  border-top: 2.5px solid var(--wind-red);
+  border-radius: 50%;
+  opacity: 0;
+  filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.9));
+  animation: wind-flow var(--dur) linear infinite;
+}
+
+.fx-wind-rot span:nth-child(1) { top: 5px; }
+.fx-wind-rot span:nth-child(2) { top: 11px; animation-delay: calc(var(--dur) * -0.25); }
+.fx-wind-rot span:nth-child(3) { top: 17px; animation-delay: calc(var(--dur) * -0.5); }
+.fx-wind-rot span:nth-child(4) { top: 23px; animation-delay: calc(var(--dur) * -0.75); }
+
+@keyframes wind-flow {
+  0% { transform: translateX(-14px) scaleX(0.6); opacity: 0; }
+  25% { opacity: 1; }
+  75% { opacity: 1; }
+  100% { transform: translateX(14px) scaleX(1); opacity: 0; }
+}
+
+/* 구름 */
+.fx-cloud {
+  position: absolute;
+  top: 8px;
+  left: 5px;
+  width: 22px;
+  height: 9px;
+  background: var(--rain-cloud);
+  border-radius: 9px;
+}
+
+.fx-cloud::before,
+.fx-cloud::after {
+  content: '';
+  position: absolute;
+  background: inherit;
+  border-radius: 50%;
+}
+
+.fx-cloud::before {
+  top: -6px;
+  left: 3px;
+  width: 11px;
+  height: 11px;
+}
+
+.fx-cloud::after {
+  top: -4px;
+  left: 11px;
+  width: 9px;
+  height: 9px;
+}
+
+/* 비 */
+.fx-drops {
+  position: absolute;
+  top: 16px;
+  left: 4px;
+  right: 4px;
+  height: 16px;
+  overflow: hidden;
+}
+
+.fx-drops i {
+  position: absolute;
+  top: 0;
+  width: 1.5px;
+  height: 6px;
+  background: var(--rain-blue);
+  border-radius: 1px;
+  animation: rain-fall 0.8s linear infinite;
+}
+
+.fx-rain.heavy .fx-drops i {
+  animation-duration: 0.55s;
+}
+
+@keyframes rain-fall {
+  0% { transform: translateY(-6px); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translateY(16px); opacity: 0; }
+}
+
+/* 천둥번개: 먹구름 + 번쩍이는 번개 */
+.fx-storm .fx-cloud {
+  left: 3px;
+  width: 26px;
+  height: 11px;
+  background: linear-gradient(var(--storm-cloud), var(--storm-cloud-dark));
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  animation: cloud-flash 3s infinite;
+}
+
+.fx-storm .fx-cloud::before {
+  top: -8px;
+  width: 13px;
+  height: 13px;
+}
+
+.fx-storm .fx-cloud::after {
+  top: -6px;
+  left: 13px;
+  width: 11px;
+  height: 11px;
+}
+
+.fx-bolt {
+  position: absolute;
+  top: 13px;
+  left: 10px;
+  width: 12px;
+  height: 18px;
+  fill: var(--bolt);
+  stroke: #e67700;
+  stroke-width: 1;
+  opacity: 0;
+  filter: drop-shadow(0 0 3px var(--bolt));
+  animation: bolt-flash 3s infinite;
+}
+
+@keyframes bolt-flash {
+  0%, 100% { opacity: 0; }
+  8% { opacity: 1; }
+  12% { opacity: 0; }
+  18% { opacity: 1; }
+  26% { opacity: 0; }
+}
+
+@keyframes cloud-flash {
+  0%, 26%, 100% { filter: brightness(1); }
+  8%, 18% { filter: brightness(1.7); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fx *,
+  .fx *::before,
+  .fx *::after {
+    animation: none !important;
+  }
+
+  .fx-wind-rot span,
+  .fx-bolt {
+    opacity: 1;
+  }
+
+  .fx-drops i {
+    transform: translateY(4px);
+  }
+}
+
+@media (max-width: 575.98px) {
+  .progress-wrap {
+    width: 140px;
+  }
+
+  .detail-temp {
+    font-size: 2.4rem;
+  }
+}

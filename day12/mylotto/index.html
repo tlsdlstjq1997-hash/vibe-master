@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>로또 번호 생성기</title>
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+  <main class="container app">
+
+    <!-- ① 헤더 -->
+    <header class="text-center app-header">
+      <div class="deco-balls" aria-hidden="true">
+        <span class="ball ball-y"></span>
+        <span class="ball ball-b"></span>
+        <span class="ball ball-r"></span>
+        <span class="ball ball-g"></span>
+        <span class="ball ball-gr"></span>
+      </div>
+      <h1 class="app-title">로또 번호 생성기</h1>
+      <p class="app-desc">넣을 번호와 뺄 번호를 고르고 5세트를 뽑아보세요</p>
+    </header>
+
+    <!-- ②③ 고정 / 제외 패널 -->
+    <section class="row g-3 mb-3">
+      <div class="col-md-6">
+        <div class="panel h-100">
+          <div class="panel-head">
+            <h2 class="panel-title">
+              <i class="bi bi-pin-angle text-fixed" aria-hidden="true"></i>고정 번호
+            </h2>
+            <span class="count-badge badge-fixed" id="fixedCount">0 / 5</span>
+          </div>
+          <div class="board" id="fixedBoard" data-type="fixed" role="group" aria-label="고정 번호 선택"></div>
+          <div class="panel-foot">
+            <div class="preview" id="fixedPreview"></div>
+            <button type="button" class="btn btn-light btn-sm btn-mini" id="btnResetFixed">초기화</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="panel h-100">
+          <div class="panel-head">
+            <h2 class="panel-title">
+              <i class="bi bi-slash-circle text-exclude" aria-hidden="true"></i>제외 번호
+            </h2>
+            <span class="count-badge badge-exclude" id="excludedCount">0 / 39</span>
+          </div>
+          <div class="board" id="excludedBoard" data-type="excluded" role="group" aria-label="제외 번호 선택"></div>
+          <div class="panel-foot">
+            <div class="preview" id="excludedPreview"></div>
+            <button type="button" class="btn btn-light btn-sm btn-mini" id="btnResetExcluded">초기화</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ④ 생성 / 전체 초기화 -->
+    <section class="action-bar">
+      <button type="button" class="btn btn-generate" id="btnGenerate">
+        <i class="bi bi-stars" aria-hidden="true"></i>5세트 생성하기
+      </button>
+      <button type="button" class="btn btn-reset-all" id="btnResetAll">
+        <i class="bi bi-arrow-clockwise" aria-hidden="true"></i>전체 초기화
+      </button>
+    </section>
+    <p class="message" id="message" aria-live="polite"></p>
+
+    <!-- ⑤ 생성 결과 -->
+    <section class="panel result-panel">
+      <div class="panel-head flex-wrap">
+        <div class="d-flex align-items-center gap-2">
+          <h2 class="panel-title">생성 결과</h2>
+          <span class="legend"><span class="legend-dot" aria-hidden="true"></span>고정 번호</span>
+        </div>
+        <div class="d-flex gap-2">
+          <button type="button" class="btn btn-light btn-sm btn-mini" id="btnCopyAll">
+            <i class="bi bi-copy" aria-hidden="true"></i><span>전체 복사</span>
+          </button>
+          <button type="button" class="btn btn-light btn-sm btn-mini" id="btnClearResults">
+            <i class="bi bi-eraser" aria-hidden="true"></i><span>결과 지우기</span>
+          </button>
+        </div>
+      </div>
+      <div id="resultList"></div>
+    </section>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
